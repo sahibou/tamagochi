@@ -1,0 +1,28 @@
+<section>
+    <form [formGroup]="clientForm" (submit)="submitClientForm()"> 
+        <!--     firstName:string,
+    lastname:string,
+    mail:string,
+    
+    address:string,
+    postCode:string,
+    city:string,
+
+    parcelId:string,
+    pluLink:string,-->
+        <label for="first-name">Prénom</label>
+        <input id="first-name" type="text" formControlName="first-name"/>
+
+        <label for="last-name">Nom</label>
+        <input id="last-name" type="text" formControlName="last-name"/>
+        
+        <label for="address">Adresse rue</label>
+        <input id="address" type="text" formControlName="address"/>
+        <label for="postCode">Code postal</label>
+        <input id="postCode" type="text" formControlName="postCode"/>
+        <label for="city">Ville</label>
+        <input id="city" type="text" formControlName="city"/>
+        
+        <button type="submit" class="primary">Soumettre</button>
+    </form>
+</section>

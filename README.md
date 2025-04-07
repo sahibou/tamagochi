@@ -1,59 +1,36 @@
-# Tamagochi
+1
+nom
+prenom
+mail
+adress projet (saisie auto)
+	site zonage du PLU
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+2
+carte > zoom sur parcelle vue parcellaire
+selection de la ou les parcelles 
+	adresse doit corresp a la parcelle sinon ca bloque
+validation parcelle et adresse
 
-## Development server
+3
+selection du batiment qui fera lobjet des travaux ENTOURER le batument ou construction concernée
 
-To start a local development server, run:
 
-```bash
-ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+> mettre a dispo les données
+	
++ données etape 1
++ numero de parcelle (et sa surface cadastrale et ladresse du cadastre qui est un peu diff des fois)
++ le zonage du PLU (avec geoportail)
+++ la page reglement et plan de zonage du PLU de la ville en question
++ screenshot de letape 3
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## API cadastre 
+https://www.data.gouv.fr/fr/dataservices/api-carto-module-rpg/
+## API address
+https://adresse.data.gouv.fr/outils/api-doc/adresse
+# API autocompletion
+https://data.geopf.fr/geocodage/completion
+## all  API Look4 Géoportail 
+https://www.data.gouv.fr/fr/dataservices/api-look4-geoportail/
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
