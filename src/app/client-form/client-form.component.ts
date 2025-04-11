@@ -30,9 +30,10 @@ export class ClientFormComponent implements OnInit {
     });    
   }
   ngOnInit(): void {
-    interval(5000).subscribe((num)=>{
-      console.log(num);
-      if(this.previousAddressValue!==this.clientForm?.value.address){
+    interval(3500).subscribe((iterationIndex)=>{
+      
+      if(this.previousAddressValue && this.previousAddressValue!==this.clientForm?.value.address){
+        this.previousAddressValue = this.clientForm.value.address
         this.updateAdresseSaisie();
       }
     });
