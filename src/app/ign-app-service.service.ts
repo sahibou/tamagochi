@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { CompletionService, Response } from 'ign-geos-completion-swagger-client';
+import { Response } from 'ign-geos-completion-swagger-client';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class IgnAppServiceService {
 
 
-  constructor(private readonly completionService:CompletionService) { 
+  constructor() { 
 
   }
 
@@ -23,7 +23,5 @@ export class IgnAppServiceService {
     //, bbox?: string               Filtre avec une bbox suivant l'ordre xmin,ymin,xmax,ymax
     //, observe?: 'body'
     //, reportProgress?: boolean
-  getCompletionData(input:string):Observable<Response>{
-    return this.completionService.completion(input, 'METROPOLE', undefined, undefined, undefined, 6, undefined, undefined, false);
-  }
+  
 }
