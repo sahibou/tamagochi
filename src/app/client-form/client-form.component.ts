@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Address, CompletionService } from 'ign-geos-completion-swagger-client';
 import { HttpClient} from '@angular/common/http';
@@ -11,10 +11,24 @@ import { interval } from 'rxjs';
   templateUrl: './client-form.component.html',
   styleUrl: './client-form.component.css'
 })
-export class ClientFormComponent implements OnInit {
+export class ClientFormComponent  {
   
+  // private searchSubject = new Subject();
+  // private readonly debounceTimeMs = 300; // Set the debounce time (in milliseconds)
+
+  // ngOnInit() {
+  //   this.searchSubject.pipe(debounceTime(this.debounceTimeMs)).subscribe((searchValue) => {
+  //     this.performSearch(searchValue);
+  //   });
+  // }
+
+  // this.searchSubject.pipe(
+  //   debounceTime(this.debounceTimeMs),
+  //   distinctUntilChanged(),
+  //   switchMap((searchValue) => this.searchService.search(searchValue))
+  // ).subscribe((results) => (this.searchResults = results));
+
   protected clientForm!:FormGroup;
-  private previousAddressValue:string="";
   protected matchingAdresses:Address[]=[];
 
   constructor(private readonly ignService:CompletionService){ 
@@ -29,16 +43,6 @@ export class ClientFormComponent implements OnInit {
       pluLink:new FormControl('plu-link'),
     });    
   }
-  ngOnInit(): void {
-    interval(3500).subscribe((iterationIndex)=>{
-      
-      if(this.previousAddressValue && this.previousAddressValue!==this.clientForm?.value.address){
-        this.previousAddressValue = this.clientForm.value.address
-        this.updateAdresseSaisie();
-      }
-    });
-  }
-
 
 
   public submitClientForm(){
