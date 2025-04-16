@@ -17,12 +17,14 @@
         <input id="last-name" type="text" formControlName="lastName"/>
         
         <label for="address">Adresse rue</label>
-        <input id="address" type="text" formControlName="address" (change)="updateAdresseSaisie()"/>
-        <label for="postCode">Code postal</label>
-        <input id="postCode" type="text" formControlName="postCode"/>
-        <label for="city">Ville</label>
-        <input id="city" type="text" formControlName="city"/>
+        <mat-form-field>
+            <input matInput id="address" type="text" formControlName="address" (change)="updateAdresseSaisie()"/>
+        </mat-form-field>
+        <label for="address2">Adresse selectionnée</label>  
         
+
+
         <button type="submit" class="primary">Soumettre</button>
+
     </form>
 </section>

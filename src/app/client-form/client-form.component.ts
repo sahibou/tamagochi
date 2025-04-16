@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Address, CompletionService } from 'ign-geos-completion-swagger-client';
 import { HttpClient} from '@angular/common/http';
-import { interval } from 'rxjs';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-client-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule],
   providers: [CompletionService,HttpClient],
   templateUrl: './client-form.component.html',
-  styleUrl: './client-form.component.css'
+  styleUrl: './client-form.component.scss'
 })
 export class ClientFormComponent  {
   
@@ -37,8 +38,8 @@ export class ClientFormComponent  {
       lastName:new FormControl('lastname'),
       mail:new FormControl('mail'),    
       address:new FormControl('address'),
-      postCode:new FormControl('post-code'),
-      city:new FormControl('city'),
+      address2:new FormControl('address2'),
+      
       parcelId:new FormControl('parcel-id'),
       pluLink:new FormControl('plu-link'),
     });    
@@ -46,11 +47,11 @@ export class ClientFormComponent  {
 
 
   public submitClientForm(){
-      console.log("bye");
+      console.log("submit");
   }
 
   updateAdresseSaisie(){
-    this.ignService.completion('9 rue de la bas', 'METROPOLE', undefined, undefined, undefined, 6, undefined, undefined, false).subscribe({
+    this.ignService.completion(this.clientForm.value.address, 'METROPOLE', undefined, undefined, undefined, 6, undefined, undefined, false).subscribe({
       next: next=>{
         this.matchingAdresses=next.results;
         console.log(this.matchingAdresses);

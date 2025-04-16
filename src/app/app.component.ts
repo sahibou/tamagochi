@@ -5,7 +5,7 @@ import { ClientFormComponent } from './client-form/client-form.component';
   selector: 'app-root',
   imports: [RouterOutlet, ClientFormComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'tamagochi';
