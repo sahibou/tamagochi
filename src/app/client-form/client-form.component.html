@@ -27,7 +27,7 @@
             <mat-label>Adresse compatible</mat-label>
             <mat-select formGroupName="address2">
                 @for(ad of matchingAdresses; track ad.fulltext){
-                    <mat-option id="{{ad.x}}-{{ad.y}}">{{ad.fulltext}}</mat-option>
+                    <mat-option value="{{ad.fulltext}}">{{ad.fulltext}}</mat-option>
                 }    
             </mat-select>
         </mat-form-field>
