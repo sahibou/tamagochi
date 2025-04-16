@@ -2,15 +2,25 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Address, CompletionService } from 'ign-geos-completion-swagger-client';
 import { HttpClient} from '@angular/common/http';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectModule} from '@angular/material/select';
+import { MatIconModule} from '@angular/material/icon';
+import { MatButtonModule} from '@angular/material/button';
+import { MatInputModule} from '@angular/material/input';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatSelectModule} from '@angular/material/select';
+import { LeafletMapComponent } from "../leaflet-map/leaflet-map.component";
 
 @Component({
   selector: 'app-client-form',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, MatSelectModule],
+  imports: [
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSelectModule,
+    LeafletMapComponent
+  ],
   providers: [CompletionService,HttpClient],
   templateUrl: './client-form.component.html',
   styleUrl: './client-form.component.scss'
