@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { ClientFormComponent } from './client-form/client-form.component';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ClientFormComponent],
+  imports: [ClientFormComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

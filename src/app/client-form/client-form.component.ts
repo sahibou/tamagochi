@@ -2,12 +2,15 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Address, CompletionService } from 'ign-geos-completion-swagger-client';
 import { HttpClient} from '@angular/common/http';
-import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-client-form',
-  imports: [ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, MatSelectModule],
   providers: [CompletionService,HttpClient],
   templateUrl: './client-form.component.html',
   styleUrl: './client-form.component.scss'
@@ -34,14 +37,14 @@ export class ClientFormComponent  {
 
   constructor(private readonly ignService:CompletionService){ 
     this.clientForm = new FormGroup({
-      firstName:new FormControl('firstname'),
-      lastName:new FormControl('lastname'),
-      mail:new FormControl('mail'),    
-      address:new FormControl('address'),
-      address2:new FormControl('address2'),
+      firstName:new FormControl(''),
+      lastName:new FormControl(''),
+      mail:new FormControl(''),    
+      address:new FormControl('9 rue du général championnet 77340 pontault combault'),
+      address2:new FormControl(''),
       
-      parcelId:new FormControl('parcel-id'),
-      pluLink:new FormControl('plu-link'),
+      parcelId:new FormControl(''),
+      pluLink:new FormControl(''),
     });    
   }
 

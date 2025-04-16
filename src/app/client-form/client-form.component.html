@@ -10,20 +10,29 @@
 
     parcelId:string,
     pluLink:string,-->
-        <label for="first-name">Prénom</label>
-        <input id="first-name" type="text" formControlName="firstName"/>
-
-        <label for="last-name">Nom</label>
-        <input id="last-name" type="text" formControlName="lastName"/>
-        
-        <label for="address">Adresse rue</label>
-        <mat-form-field>
-            <input matInput id="address" type="text" formControlName="address" (change)="updateAdresseSaisie()"/>
+        <mat-form-field class="input-client">
+            <mat-label>Votre prénom</mat-label>
+            <input matInput type="text" formGroupName="firstName"/>
         </mat-form-field>
-        <label for="address2">Adresse selectionnée</label>  
+        <mat-form-field class="input-client">
+            <mat-label>Votre nom</mat-label>
+            <input matInput type="text" formControlName="lastName"/>
+        </mat-form-field>
+        <mat-form-field class="input-client">
+            <mat-label>Votre adresse</mat-label>
+            <input matInput type="text" formControlName="address" (change)="updateAdresseSaisie()"/>
+        </mat-form-field>
+
+        <mat-form-field class="input-client">
+            <mat-label>Adresse compatible</mat-label>
+            <mat-select formGroupName="address2">
+                @for(ad of matchingAdresses; track ad.fulltext){
+                    <mat-option id="{{ad.x}}-{{ad.y}}">{{ad.fulltext}}</mat-option>
+                }    
+            </mat-select>
+        </mat-form-field>
         
-
-
+        <label for="address2">Adresse selectionnée</label>  
         <button type="submit" class="primary">Soumettre</button>
 
     </form>
