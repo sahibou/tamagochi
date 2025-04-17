@@ -6,7 +6,7 @@ import { MatIconModule} from '@angular/material/icon';
 import { MatButtonModule} from '@angular/material/button';
 import { MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule} from '@angular/material/form-field';
-import { MatSelectModule} from '@angular/material/select';
+import { MatSelectChange, MatSelectModule} from '@angular/material/select';
 import { LeafletMapComponent } from "../leaflet-map/leaflet-map.component";
 
 @Component({
@@ -44,6 +44,7 @@ export class ClientFormComponent  {
 
   protected clientForm!:FormGroup;
   protected matchingAdresses:Address[]=[];
+  protected selectedAddress!:Address|undefined;
 
   constructor(private readonly ignService:CompletionService){ 
     this.clientForm = new FormGroup({
@@ -72,5 +73,13 @@ export class ClientFormComponent  {
       error:error=>console.log(error),
       complete:()=>console.log("terminé")
     });
+  }
+
+  newLocationSelected(event:MatSelectChange){
+    let selectedAddressFulltext = event.value;
+    console.log("new address selected in form : "+selectedAddressFulltext);
+    let matchingAddr =this.matchingAdresses.find(ad=>ad.fulltext===selectedAddressFulltext) 
+    console.log("new address selected matches "+JSON.stringify(matchingAddr));
+    this.selectedAddress=matchingAddr;
   }
 }
