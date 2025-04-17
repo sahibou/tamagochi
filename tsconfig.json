@@ -6,6 +6,9 @@
     "outDir": "./dist/out-tsc",
     "strict": true,
     "paths": {
+      "api-cadastre-parcelle": [
+        "./dist/api-cadastre-parcelle"
+      ],
       "ign-geos-completion-swagger-client": [
         "./dist/ign-geos-completion-swagger-client"
       ]

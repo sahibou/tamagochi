@@ -34,3 +34,12 @@ https://data.geopf.fr/geocodage/completion
 ## all  API Look4 Géoportail 
 https://www.data.gouv.fr/fr/dataservices/api-look4-geoportail/
 
+
+## API cadastre 
+https://apicarto.ign.fr/api/doc/cadastre.yml
+https://converter.swagger.io/#/Converter/convertByUrl
+docker run --rm --net=host -u="$(id -u)" -v ${PWD}:/local swaggerapi/swagger-codegen-cli-v3:3.0.68 generate \
+		-i /local/projects/api-cadastre-parcelle/swagger.json \
+		-l typescript-angular \
+		-o /local/projects/api-cadastre-parcelle/src \
+		--additional-properties ngVersion=19.2.6

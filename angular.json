@@ -136,6 +136,39 @@
 					}
 				}
 			}
-		}
+    },
+    "api-cadastre-parcelle": {
+      "projectType": "library",
+      "root": "projects/api-cadastre-parcelle",
+      "sourceRoot": "projects/api-cadastre-parcelle/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/api-cadastre-parcelle/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/api-cadastre-parcelle/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/api-cadastre-parcelle/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/api-cadastre-parcelle/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    }
 	}
 }

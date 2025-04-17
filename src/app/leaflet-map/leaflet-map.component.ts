@@ -36,10 +36,36 @@ export class LeafletMapComponent implements AfterViewInit {
   publishLeafletData(){    
     this.leafletEvent.emit(this.mapData);
   }
-  // ngAfterViewInit() {
-  //   this.initMap();
-  //   this.centerMap();
-  // }
+  
+  /* api cadastre parcelle 
+   geom {
+        "coordinates": [
+          [
+            [
+              2.613602186061513,
+              48.7961162875869
+            ],
+            [
+              2.613602186061513,
+              48.79396172372989
+            ],
+            [
+              2.617184416679521,
+              48.79396172372989
+            ],
+            [
+              2.617184416679521,
+              48.7961162875869
+            ],
+            [
+              2.613602186061513,
+              48.7961162875869
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }*/
+  
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {

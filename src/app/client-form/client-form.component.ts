@@ -67,19 +67,14 @@ export class ClientFormComponent  {
   updateAdresseSaisie(){
     this.ignService.completion(this.clientForm.value.address, 'METROPOLE', undefined, undefined, undefined, 6, undefined, undefined, false).subscribe({
       next: next=>{
-        this.matchingAdresses=next.results;
-        console.log(this.matchingAdresses);
+        this.matchingAdresses=next.results;        
       },
-      error:error=>console.log(error),
-      complete:()=>console.log("terminé")
+      error:error=>console.log(error)      
     });
   }
 
   newLocationSelected(event:MatSelectChange){
-    let selectedAddressFulltext = event.value;
-    console.log("new address selected in form : "+selectedAddressFulltext);
-    let matchingAddr =this.matchingAdresses.find(ad=>ad.fulltext===selectedAddressFulltext) 
-    console.log("new address selected matches "+JSON.stringify(matchingAddr));
-    this.selectedAddress=matchingAddr;
+    let selectedAddressFulltext = event.value;    
+    this.selectedAddress=this.matchingAdresses.find(ad=>ad.fulltext===selectedAddressFulltext);
   }
 }
