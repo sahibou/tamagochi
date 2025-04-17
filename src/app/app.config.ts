@@ -3,7 +3,8 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { ApiModule, Configuration } from 'ign-geos-completion-swagger-client';
+import { ApiModule as ApiModuleIgn, Configuration as ConfigurationIgn} from 'ign-geos-completion-swagger-client';
+import {ApiModule as ApiModuleCadastre, Configuration as ConfigurationCadastre} from 'api-cadastre-parcelle';
 import { HttpClientModule } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
@@ -13,15 +14,25 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
       importProvidersFrom( HttpClientModule,
-        ApiModule.forRoot(()=>new Configuration({
-                                          apiKeys:undefined,//apiKeys?: {[ key: string ]: string};
-                                          username:undefined,//username?: string;
-                                          password:undefined,//password?: string;
-                                          accessToken:undefined,//accessToken?: string | (() => string);
-                                          basePath:"https://data.geopf.fr/geocodage/completion",//basePath?: string;
-                                          withCredentials:false//withCredentials?: boolean;
-                                        })
-                          )
+        ApiModuleIgn.forRoot(()=>new ConfigurationIgn({
+                              apiKeys:undefined,//apiKeys?: {[ key: string ]: string};
+                              username:undefined,//username?: string;
+                              password:undefined,//password?: string;
+                              accessToken:undefined,//accessToken?: string | (() => string);
+                              basePath:"https://data.geopf.fr/geocodage/completion",//basePath?: string;
+                              withCredentials:false//withCredentials?: boolean;
+                            })
+                          ),
+          ApiModuleCadastre.forRoot(()=>new ConfigurationCadastre({
+                            apiKeys:undefined,//apiKeys?: {[ key: string ]: string};
+                            username:undefined,//username?: string;
+                            password:undefined,//password?: string;
+                            accessToken:undefined,//accessToken?: string | (() => string);
+                            basePath:"https://apicarto.ign.fr",//basePath?: string;
+                            withCredentials:false//withCredentials?: boolean;
+                          })
+            ),
+        
       )
   ]
 };

@@ -2,12 +2,16 @@ import { EventEmitter, Component, AfterViewInit, PLATFORM_ID ,Inject, Input, Out
 import { isPlatformBrowser } from '@angular/common';
 import { LeafletData } from '../leaflet-data';
 import { Address} from 'ign-geos-completion-swagger-client'
+import { ParcelleService } from 'api-cadastre-parcelle'
+import { Geometry } from 'api-cadastre-parcelle';
 import * as L from 'leaflet';
+import { Polygon } from 'geojson';
 
 
 @Component({
   selector: 'app-leaflet-map',
   imports: [],  
+  providers: [ParcelleService],
   templateUrl: './leaflet-map.component.html',
   styleUrl: './leaflet-map.component.scss'
 })
@@ -19,6 +23,8 @@ export class LeafletMapComponent implements AfterViewInit {
   @Output() leafletEvent:EventEmitter<LeafletData> = new EventEmitter<LeafletData>();
   mapData!:LeafletData;
 
+  constructor(private readonly parcelleService:ParcelleService, @Inject(PLATFORM_ID) private platformId: any) {}
+  
   @Input() 
   set selectedAddress(value:Address|undefined){
     console.log("Leaflet has just received a new address"+JSON.stringify(value));
@@ -31,40 +37,12 @@ export class LeafletMapComponent implements AfterViewInit {
     }    
   }
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
+  
   
   publishLeafletData(){    
     this.leafletEvent.emit(this.mapData);
   }
   
-  /* api cadastre parcelle 
-   geom {
-        "coordinates": [
-          [
-            [
-              2.613602186061513,
-              48.7961162875869
-            ],
-            [
-              2.613602186061513,
-              48.79396172372989
-            ],
-            [
-              2.617184416679521,
-              48.79396172372989
-            ],
-            [
-              2.617184416679521,
-              48.7961162875869
-            ],
-            [
-              2.613602186061513,
-              48.7961162875869
-            ]
-          ]
-        ],
-        "type": "Polygon"
-      }*/
   
 
   ngAfterViewInit() {
@@ -97,6 +75,96 @@ export class LeafletMapComponent implements AfterViewInit {
                                       [this._selectedAddress.y, this._selectedAddress.x]
                                     ]); // Define bounds with the same coordinates
        this.map.fitBounds(bounds);    
+       this.loadConstructions();
     }
   }
+
+  loadConstructions(){
+    // const squareCoord:number[][]=[[
+    //           2.61360218606151,
+    //           48.7961162875869
+    //       ],
+    //       [
+    //           2.61360218606151,
+    //           48.7939617237299
+    //       ],
+    //       [
+    //           2.61718441667952,
+    //           48.7939617237299
+    //       ],
+    //       [
+    //           2.61718441667952,
+    //           48.7961162875869
+    //       ],
+    //       [
+    //           2.61360218606151,
+    //           48.7961162875869
+    //       ]];
+    if(this._selectedAddress){
+      // 1deg x deg a paris = 111.111 lat x 69.17 lng
+      // lat 0.009000000 = 1m
+      // lng 0.014457134 = 1m
+      const squareSide = 10;//10m
+      const ydiff:number = 0.009000000*squareSide;
+      const xdiff:number = 0.014457134*squareSide;
+      let centerx= this._selectedAddress.x;
+      let centery= this._selectedAddress.y;
+      const nw = [centerx - xdiff/2,centery + ydiff/2];
+      const ne = [centerx + xdiff/2,centery + ydiff/2];
+      const se = [centerx + xdiff/2,centery - ydiff/2];
+      const sw = [centerx - xdiff/2,centery - ydiff/2];
+
+      let geometry:Geometry={
+            type: 'Polygon',
+            coordinates: [
+              [
+                  nw,sw,se,ne,nw
+              ]
+            ],
+          };
+      
+      this.parcelleService.getParcelle(undefined,undefined,undefined,undefined,undefined,geometry,undefined,undefined,undefined,undefined,undefined)
+      .subscribe({
+        next: item1=>console.log("received "+JSON.stringify(item1)),
+        error:err=>console.error(err),
+        complete:()=>console.info("end")
+      })
+      
+    }
+  }
+
+
+
+  /* api cadastre parcelle 
+
+{
+    "coordinates": [
+        [
+            [
+                2.61360218606151,
+                48.7961162875869
+            ],
+            [
+                2.61360218606151,
+                48.7939617237299
+            ],
+            [
+                2.61718441667952,
+                48.7939617237299
+            ],
+            [
+                2.61718441667952,
+                48.7961162875869
+            ],
+            [
+                2.61360218606151,
+                48.7961162875869
+            ]
+        ]
+    ],
+    "type": "Polygon"
+}  
+  
+  */
+  
 }

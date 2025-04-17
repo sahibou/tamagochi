@@ -1,0 +1,11 @@
+export * from './commune.service';
+import { CommuneService } from './commune.service';
+export * from './divisionBDParcellaire.service';
+import { DivisionBDParcellaireService } from './divisionBDParcellaire.service';
+export * from './feuillePCIEXPRESS.service';
+import { FeuillePCIEXPRESSService } from './feuillePCIEXPRESS.service';
+export * from './localisant.service';
+import { LocalisantService } from './localisant.service';
+export * from './parcelle.service';
+import { ParcelleService } from './parcelle.service';
+export const APIS = [CommuneService, DivisionBDParcellaireService, FeuillePCIEXPRESSService, LocalisantService, ParcelleService];
