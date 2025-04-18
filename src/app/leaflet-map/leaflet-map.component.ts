@@ -129,8 +129,6 @@ export class LeafletMapComponent implements AfterViewInit {
 
   async addFeatureToMap(f:Feature, selectedParcelId:string){
     const L = await import('leaflet');
-    console.warn(f);
-
     let xxx:L.Layer = L.geoJSON(f,
       {
         style: f.id===selectedParcelId?this.stylea:this.styleb,
@@ -139,38 +137,43 @@ export class LeafletMapComponent implements AfterViewInit {
         }
       }
       ).addTo(this.map);
-      
-      this._aliveConstructionObject.push(xxx);
+    
     
     this._aliveConstructionObject.push(xxx);
   }
 
   //LeafletEventHandlerFn = (event: LeafletEvent) => void;
   fn = (event: L.LeafletEvent) =>{
-    console.log(event);
     let newParcelId:string = event.target.feature.id;
     let oldParcelId:string = this._selectedParcelId;
     this._selectedParcelId= newParcelId;
-    //rebuild old
-    let featureOld:Feature|undefined = this.getSavedFeature(newParcelId);
-    this.map.removeLayer(event.target);//Removes the layer with the given internal ID or the given layer from the group.
-    if(featureOld!=undefined){
-      this.addFeatureToMap(featureOld,oldParcelId);
-    }
+    this._aliveConstructionObject.forEach(l=>this.map.removeLayer(l));
+    this.selectedAddress=this._selectedAddress;//call setter
+    
+    console.log(event);
+    // let newParcelId:string = event.target.feature.id;
+    // let oldParcelId:string = this._selectedParcelId;
+    // this._selectedParcelId= newParcelId;
+    // //rebuild old
+    // let featureOld:Feature|undefined = this.getSavedFeature(newParcelId);
+    // this.map.removeLayer(event.target);//Removes the layer with the given internal ID or the given layer from the group.
+    // if(featureOld!=undefined){
+    //   this.addFeatureToMap(featureOld,oldParcelId);
+    // }
 
-    //rebuild new
-    let featureNew:Feature|undefined = this.getSavedFeature(oldParcelId);
-    this.map.removeLayer(event.target);
-    if(featureNew!=undefined){
-      this.addFeatureToMap(featureNew,newParcelId);
-    }
+    // //rebuild new
+    // let featureNew:Feature|undefined = this.getSavedFeature(oldParcelId);
+    // this.map.removeLayer(event.target);
+    // if(featureNew!=undefined){
+    //   this.addFeatureToMap(featureNew,newParcelId);
+    // }
   }
 
-  getSavedFeature(parcelId:string):Feature|undefined{
-    // console.log(this._aliveConstructionObject);
-    console.log(this.map);
-    let featureArray:Feature[] = (this._receivedFeatureCollection.features as Feature[]);
-    let feature = featureArray.find(feat=>feat.id===parcelId);
-    return feature;
-  }
+  // getSavedFeature(parcelId:string):Feature|undefined{
+  //   // console.log(this._aliveConstructionObject);
+  //   console.log(this.map);
+  //   let featureArray:Feature[] = (this._receivedFeatureCollection.features as Feature[]);
+  //   let feature = featureArray.find(feat=>feat.id===parcelId);
+  //   return feature;
+  // }
 }
