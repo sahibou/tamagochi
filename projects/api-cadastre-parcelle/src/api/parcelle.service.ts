@@ -102,7 +102,6 @@ export class ParcelleService {
             queryParameters = queryParameters.set('com_abs', <any>comAbs);
         }
         if (geom !== undefined && geom !== null) {
-            console.info("geom="+JSON.stringify(geom))
             queryParameters = queryParameters.set('geom', JSON.stringify(geom));
         }
         if (limit !== undefined && limit !== null) {

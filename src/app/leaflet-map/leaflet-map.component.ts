@@ -4,9 +4,10 @@ import { LeafletData } from '../leaflet-data';
 import { Address} from 'ign-geos-completion-swagger-client'
 import { ParcelleService } from 'api-cadastre-parcelle'
 import { Geometry } from 'api-cadastre-parcelle';
-import * as L from 'leaflet';
 import { FeatureCollection } from 'api-cadastre-parcelle';
 import { Feature } from 'geojson';
+import { ConstructionObject } from '../construction-object';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-leaflet-map',
@@ -19,13 +20,15 @@ export class LeafletMapComponent implements AfterViewInit {
   private map!: L.Map;
   private geojsonLayer!:L.Layer;
 
+  
+
   markers!: L.Marker[];
   _selectedAddress!:Address|undefined;
   @Output() leafletEvent:EventEmitter<LeafletData> = new EventEmitter<LeafletData>();
   mapData!:LeafletData;
-  parcelleCollection!:FeatureCollection;
-  mapFeatures:any[]=[];
-  selectedParcelId:string='';
+  _receivedFeatureCollection!:FeatureCollection;
+  _aliveConstructionObject:L.Layer[]=[];
+  _selectedParcelId:string='';
   
 
   constructor(private readonly parcelleService:ParcelleService, @Inject(PLATFORM_ID) private platformId: any) {}
@@ -108,12 +111,9 @@ export class LeafletMapComponent implements AfterViewInit {
       this.parcelleService.getParcelle(undefined,undefined,undefined,undefined,undefined,geometry,10,undefined,undefined,undefined,undefined)
       .subscribe({
         next: featureCollection=>{
-    
-          // this.map.;
-          //let myLayer = L.geoJSON().addTo(this.map);
-          this.parcelleCollection=featureCollection;
+          this._receivedFeatureCollection=featureCollection;
           for(const f of featureCollection.features){
-            this.fromFeatureToLeaflet(f);
+            this.addFeatureToMap(f,this._selectedParcelId);
           }
         },
         error:err=>console.error(err)
@@ -127,25 +127,50 @@ export class LeafletMapComponent implements AfterViewInit {
   stylea:{}={color: "#0000ff"};
   styleb:{}={color: "#ff0000"};
 
-  async fromFeatureToLeaflet(f:Feature){
+  async addFeatureToMap(f:Feature, selectedParcelId:string){
     const L = await import('leaflet');
     console.warn(f);
-    this.mapFeatures.push(L.geoJSON(f,{
-      style: f.id===this.selectedParcelId?this.stylea:this.styleb,
-      onEachFeature: (f, layer)=> {
-        layer.on('click', this.fn)
+
+    let xxx:L.Layer = L.geoJSON(f,
+      {
+        style: f.id===selectedParcelId?this.stylea:this.styleb,
+        onEachFeature: (f, layer)=> {
+          layer.on('click', this.fn)
+        }
       }
-    }).addTo(this.map));
+      ).addTo(this.map);
+      
+      this._aliveConstructionObject.push(xxx);
+    
+    this._aliveConstructionObject.push(xxx);
   }
 
   //LeafletEventHandlerFn = (event: LeafletEvent) => void;
   fn = (event: L.LeafletEvent) =>{
-    this.selectedParcelId= event.target.feature.id;
-    // let condamne = this.mapFeatures.find(f=>f.target.feature.id===this.selectedParcelId);//(this.geojsonLayer);
-    // this.map.removeLayer(condamne);
-    // this.mapFeatures=this.mapFeatures.filter(f=>f.target.feature.id!==this.selectedParcelId);
-    this.map.removeLayer(this.geojsonLayer);
-    this.selectedAddress=this._selectedAddress;//call setter
+    console.log(event);
+    let newParcelId:string = event.target.feature.id;
+    let oldParcelId:string = this._selectedParcelId;
+    this._selectedParcelId= newParcelId;
+    //rebuild old
+    let featureOld:Feature|undefined = this.getSavedFeature(newParcelId);
+    this.map.removeLayer(event.target);//Removes the layer with the given internal ID or the given layer from the group.
+    if(featureOld!=undefined){
+      this.addFeatureToMap(featureOld,oldParcelId);
+    }
+
+    //rebuild new
+    let featureNew:Feature|undefined = this.getSavedFeature(oldParcelId);
+    this.map.removeLayer(event.target);
+    if(featureNew!=undefined){
+      this.addFeatureToMap(featureNew,newParcelId);
+    }
   }
-  
+
+  getSavedFeature(parcelId:string):Feature|undefined{
+    // console.log(this._aliveConstructionObject);
+    console.log(this.map);
+    let featureArray:Feature[] = (this._receivedFeatureCollection.features as Feature[]);
+    let feature = featureArray.find(feat=>feat.id===parcelId);
+    return feature;
+  }
 }
