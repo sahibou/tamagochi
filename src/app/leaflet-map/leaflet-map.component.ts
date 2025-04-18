@@ -29,6 +29,7 @@ export class LeafletMapComponent implements AfterViewInit {
   _receivedFeatureCollection!:FeatureCollection;
   _aliveConstructionObject:L.Layer[]=[];
   _selectedParcelId:string='';
+  _selectedParcelData!:Feature|undefined;
   
 
   constructor(private readonly parcelleService:ParcelleService, @Inject(PLATFORM_ID) private platformId: any) {}
@@ -150,7 +151,15 @@ export class LeafletMapComponent implements AfterViewInit {
     this._aliveConstructionObject.forEach(l=>this.map.removeLayer(l));
     this.selectedAddress=this._selectedAddress;//call setter
     
-    console.log(event);
+    // console.log("find");
+    // console.log(event);
+    // console.log("into");
+    // console.log(this._receivedFeatureCollection);
+    this._selectedParcelId = event.target.feature.id;
+    let features:Feature[]= (this._receivedFeatureCollection.features as Feature[]);
+    this._selectedParcelData=features.find(f=>f.id===this._selectedParcelId) ?? undefined;
+
+    console.info(this._selectedParcelData)
     // let newParcelId:string = event.target.feature.id;
     // let oldParcelId:string = this._selectedParcelId;
     // this._selectedParcelId= newParcelId;
