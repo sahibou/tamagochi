@@ -23,8 +23,15 @@
             <input matInput type="text" formControlName="address" (change)="updateAdresseSaisie()"/>
         </mat-form-field>
 
+        @if(this.etat){
+            <label for="address2">{{this.etat}}</label>  
+        }
+        @if(!this.etat){
+            <label for="address2">Adresses compatibles trouvés : {{this.matchingAdresses.length}}</label>  
+        }
+        
         <mat-form-field class="input-client">
-            <mat-label>Adresse compatible</mat-label>
+            <mat-label>Adresses compatibles</mat-label>
             <mat-select (selectionChange)="newLocationSelected($event)" formGroupName="address2">
                 @for(ad of matchingAdresses; track ad.fulltext){
                     <mat-option value="{{ad.fulltext}}">{{ad.fulltext}}</mat-option>
@@ -32,7 +39,7 @@
             </mat-select>
         </mat-form-field>
         
-        <label for="address2">Adresse selectionnée</label>  
+        
 
         <app-leaflet-map [selectedAddress]="selectedAddress"></app-leaflet-map>
         <button type="submit" class="primary">Soumettre</button>

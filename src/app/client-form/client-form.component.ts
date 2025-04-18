@@ -45,7 +45,7 @@ export class ClientFormComponent  {
   protected clientForm!:FormGroup;
   protected matchingAdresses:Address[]=[];
   protected selectedAddress!:Address|undefined;
-
+  protected etat!:string;
   constructor(private readonly ignService:CompletionService){ 
     this.clientForm = new FormGroup({
       firstName:new FormControl(''),
@@ -65,11 +65,13 @@ export class ClientFormComponent  {
   }
 
   updateAdresseSaisie(){
+    this.etat="Recherche de correspondances en cours...";
     this.ignService.completion(this.clientForm.value.address, 'METROPOLE', undefined, undefined, undefined, 6, undefined, undefined, false).subscribe({
       next: next=>{
         this.matchingAdresses=next.results;        
       },
-      error:error=>console.log(error)      
+      error:error=>console.log(error),
+      complete:()=>this.etat='' 
     });
   }
 
