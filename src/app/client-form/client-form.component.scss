@@ -2,3 +2,27 @@
   display:block;
   width: 600px;
 }
+
+
+.flex-client-form{
+  display: flex;
+}
+
+/* Control the left side */
+.left {
+   display: block;
+   align-content: flex-start;
+   width: 60%;
+   padding: 5px;
+   background-color: var(--content-client-form-left);
+}
+
+/* Control the right side */
+.right {
+  display: block; 
+  align-content: flex-start;
+  width: 40%;
+  padding: 5px;
+  line-height: 0.6em;
+  background-color: var(--content-client-form-right);
+}

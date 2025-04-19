@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
-import { AppComponent } from './app.component';
+import { ClientWelcomeComponent } from './client-welcome/client-welcome.component';
+import { ClientFormComponent } from './client-form/client-form.component';
 
 export const routes: Routes = [
-    {path:"**", component:AppComponent}
+    {path:"", component:ClientWelcomeComponent},
+    {path:"saisie-adresse", component:ClientFormComponent}
 ];

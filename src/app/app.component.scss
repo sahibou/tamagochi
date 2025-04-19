@@ -21,6 +21,13 @@
 }
 
 :host {
+  // --content-back-all: oklch(36.98% 0.014 302.71);//gray-700
+  // --content-client-form-left: oklch(51.01% 0.274 263.83);//bright-blue
+  // --content-client-form-right: oklch(63.32% 0.24 31.68);//orange-red
+  --content-back-all: white;//gray-700
+  --content-client-form-left: white;//bright-blue
+  --content-client-form-right: white;//orange-red
+
     --bright-blue: oklch(51.01% 0.274 263.83);
     --electric-violet: oklch(53.18% 0.28 296.97);
     --french-violet: oklch(47.66% 0.246 305.88);
@@ -95,10 +102,8 @@
 
   .content {
     padding: var(--content-padding);
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    max-width: 700px;
+    background-color: var(--content-back-all);
+    width: 98%;
     margin-bottom: 3rem;
     h1 
     {

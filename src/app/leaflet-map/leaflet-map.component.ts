@@ -24,7 +24,7 @@ export class LeafletMapComponent implements AfterViewInit {
 
   markers!: L.Marker[];
   _selectedAddress!:Address|undefined;
-  @Output() leafletEvent:EventEmitter<LeafletData> = new EventEmitter<LeafletData>();
+  @Output() parcelleEvent:EventEmitter<Feature> = new EventEmitter<Feature>();
   mapData!:LeafletData;
   _receivedFeatureCollection!:FeatureCollection;
   _aliveConstructionObject:L.Layer[]=[];
@@ -44,14 +44,6 @@ export class LeafletMapComponent implements AfterViewInit {
       this.centerMap();    
     }    
   }
-
-  
-  
-  publishLeafletData(){    
-    this.leafletEvent.emit(this.mapData);
-  }
-  
-  
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -143,7 +135,6 @@ export class LeafletMapComponent implements AfterViewInit {
     this._aliveConstructionObject.push(xxx);
   }
 
-  //LeafletEventHandlerFn = (event: LeafletEvent) => void;
   fn = (event: L.LeafletEvent) =>{
     let newParcelId:string = event.target.feature.id;
     let oldParcelId:string = this._selectedParcelId;
@@ -151,38 +142,14 @@ export class LeafletMapComponent implements AfterViewInit {
     this._aliveConstructionObject.forEach(l=>this.map.removeLayer(l));
     this.selectedAddress=this._selectedAddress;//call setter
     
-    // console.log("find");
-    // console.log(event);
-    // console.log("into");
-    // console.log(this._receivedFeatureCollection);
     this._selectedParcelId = event.target.feature.id;
     let features:Feature[]= (this._receivedFeatureCollection.features as Feature[]);
     this._selectedParcelData=features.find(f=>f.id===this._selectedParcelId) ?? undefined;
 
-    console.info(this._selectedParcelData)
-    // let newParcelId:string = event.target.feature.id;
-    // let oldParcelId:string = this._selectedParcelId;
-    // this._selectedParcelId= newParcelId;
-    // //rebuild old
-    // let featureOld:Feature|undefined = this.getSavedFeature(newParcelId);
-    // this.map.removeLayer(event.target);//Removes the layer with the given internal ID or the given layer from the group.
-    // if(featureOld!=undefined){
-    //   this.addFeatureToMap(featureOld,oldParcelId);
-    // }
-
-    // //rebuild new
-    // let featureNew:Feature|undefined = this.getSavedFeature(oldParcelId);
-    // this.map.removeLayer(event.target);
-    // if(featureNew!=undefined){
-    //   this.addFeatureToMap(featureNew,newParcelId);
-    // }
+    if(this._selectedParcelData){
+      this.parcelleEvent.emit(this._selectedParcelData);
+    }
   }
 
-  // getSavedFeature(parcelId:string):Feature|undefined{
-  //   // console.log(this._aliveConstructionObject);
-  //   console.log(this.map);
-  //   let featureArray:Feature[] = (this._receivedFeatureCollection.features as Feature[]);
-  //   let feature = featureArray.find(feat=>feat.id===parcelId);
-  //   return feature;
-  // }
+
 }

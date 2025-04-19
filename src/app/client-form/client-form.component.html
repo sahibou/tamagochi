@@ -1,48 +1,85 @@
-<section>
-    <form [formGroup]="clientForm" (submit)="submitClientForm()"> 
-        <!--     firstName:string,
-    lastname:string,
-    mail:string,
-    
-    address:string,
-    postCode:string,
-    city:string,
+<div class="flex-client-form">
+    <div class="left">
+        <form [formGroup]="clientForm" (submit)="submitClientForm()"> 
+            <!--     firstName:string,
+        lastname:string,
+        mail:string,
+        
+        address:string,
+        postCode:string,
+        city:string,
 
-    parcelId:string,
-    pluLink:string,-->
-        <mat-form-field class="input-client">
-            <mat-label>Votre prénom</mat-label>
-            <input matInput type="text" formGroupName="firstName"/>
-        </mat-form-field>
-        <mat-form-field class="input-client">
-            <mat-label>Votre nom</mat-label>
-            <input matInput type="text" formControlName="lastName"/>
-        </mat-form-field>
-        <mat-form-field class="input-client">
-            <mat-label>Votre adresse</mat-label>
-            <input matInput type="text" formControlName="address" (change)="updateAdresseSaisie()"/>
-        </mat-form-field>
+        parcelId:string,
+        pluLink:string,-->
+            <mat-form-field class="input-client">
+                <mat-label>Votre prénom</mat-label>
+                <input matInput type="text" formGroupName="firstName"/>
+            </mat-form-field>
+            <mat-form-field class="input-client">
+                <mat-label>Votre nom</mat-label>
+                <input matInput type="text" formControlName="lastName"/>
+            </mat-form-field>
+            <mat-form-field class="input-client">
+                <mat-label>Votre adresse</mat-label>
+                <input matInput type="text" formControlName="address" (change)="updateAdresseSaisie()"/>
+            </mat-form-field>
 
-        @if(this.etat){
-            <label for="address2">{{this.etat}}</label>  
+            
+            @if(this.etat){
+                <label for="address2">{{this.etat}}</label> 
+            }
+            @if(!this.etat){
+                <p>Adresses compatibles trouvés : {{this.matchingAdresses.length}}</p>  
+            }
+            <mat-form-field class="input-client">
+                <mat-label>Adresses compatibles</mat-label>
+                <mat-select (selectionChange)="newLocationSelected($event)" formGroupName="address2">
+                    @for(ad of matchingAdresses; track ad.fulltext){
+                        <mat-option value="{{ad.fulltext}}">{{ad.fulltext}}</mat-option>
+                    }    
+                </mat-select>
+            </mat-form-field> 
+
+            
+            
+            @if(this.selectedAddress){
+                <app-leaflet-map [selectedAddress]="selectedAddress" (parcelleEvent)="newParcelInfo($event)"></app-leaflet-map>
+            }
+            <a mat-flat-button routerLink="">Retour</a>
+            <button mat-flat-button type="submit" class="primary">Soumettre</button>
+
+        </form>
+    </div>
+    <div class="right">
+        @if(this._parcelInfoReceived){
+            <p>{{this._parcelInfoReceived.id}}</p>
+            @if(this._parcelInfoReceivedProps){
+                <p>code_arr : {{this._parcelInfoReceivedProps['code_arr']??''}}</p>
+                <p>code_com : {{this._parcelInfoReceivedProps['code_com']??''}}</p>
+                <p>code_dep : {{this._parcelInfoReceivedProps['code_dep']??''}}</p>
+                <p>code_insee : {{this._parcelInfoReceivedProps['code_insee']??''}}</p>
+                <p>com_abs : {{this._parcelInfoReceivedProps['com_abs']??''}}</p>
+                <p>contenance : {{this._parcelInfoReceivedProps['contenance']??''}}</p>
+                <p>feuille : {{this._parcelInfoReceivedProps['feuille']??''}}</p>
+                <p>gid : {{this._parcelInfoReceivedProps['gid']??''}}</p>
+                <p>idu : {{this._parcelInfoReceivedProps['idu']??''}}</p>
+                <p>nom_com : {{this._parcelInfoReceivedProps['nom_com']??''}}</p>
+                <p>numero : {{this._parcelInfoReceivedProps['numero']??''}}</p>
+                <p>section : {{this._parcelInfoReceivedProps['section']??''}}</p>
+                <!-- code_arr: "000"
+                            code_com: "373"
+                            code_dep: "77"
+                            code_insee: "77373"
+                            com_abs: "000"
+                            contenance: 4607
+                            feuille: 1
+                            gid: 43861302
+                            idu: "77373000AH0003"
+                            nom_com: "Pontault-Combault"
+                            numero: "0003"
+                            section:"AH" -->
+            }
+
         }
-        @if(!this.etat){
-            <label for="address2">Adresses compatibles trouvés : {{this.matchingAdresses.length}}</label>  
-        }
-        
-        <mat-form-field class="input-client">
-            <mat-label>Adresses compatibles</mat-label>
-            <mat-select (selectionChange)="newLocationSelected($event)" formGroupName="address2">
-                @for(ad of matchingAdresses; track ad.fulltext){
-                    <mat-option value="{{ad.fulltext}}">{{ad.fulltext}}</mat-option>
-                }    
-            </mat-select>
-        </mat-form-field>
-        
-        
-
-        <app-leaflet-map [selectedAddress]="selectedAddress"></app-leaflet-map>
-        <button mat-flat-button type="submit" class="primary">Soumettre</button>
-
-    </form>
-</section>
+    </div>
+</div>

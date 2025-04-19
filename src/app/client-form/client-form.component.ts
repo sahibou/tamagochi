@@ -8,6 +8,9 @@ import { MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule} from '@angular/material/select';
 import { LeafletMapComponent } from "../leaflet-map/leaflet-map.component";
+import { RouterLink } from '@angular/router';
+import {Feature} from 'geojson';
+import type GeoJsonProperties from 'geojson';
 
 @Component({
   selector: 'app-client-form',
@@ -19,33 +22,20 @@ import { LeafletMapComponent } from "../leaflet-map/leaflet-map.component";
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
-    LeafletMapComponent
+    LeafletMapComponent,RouterLink
   ],
   providers: [CompletionService,HttpClient],
   templateUrl: './client-form.component.html',
   styleUrl: './client-form.component.scss'
 })
 export class ClientFormComponent  {
-  
-  // private searchSubject = new Subject();
-  // private readonly debounceTimeMs = 300; // Set the debounce time (in milliseconds)
-
-  // ngOnInit() {
-  //   this.searchSubject.pipe(debounceTime(this.debounceTimeMs)).subscribe((searchValue) => {
-  //     this.performSearch(searchValue);
-  //   });
-  // }
-
-  // this.searchSubject.pipe(
-  //   debounceTime(this.debounceTimeMs),
-  //   distinctUntilChanged(),
-  //   switchMap((searchValue) => this.searchService.search(searchValue))
-  // ).subscribe((results) => (this.searchResults = results));
 
   protected clientForm!:FormGroup;
   protected matchingAdresses:Address[]=[];
   protected selectedAddress!:Address|undefined;
   protected etat!:string;
+  _parcelInfoReceived!:Feature;
+  _parcelInfoReceivedProps!:GeoJsonProperties.GeoJsonProperties;
   constructor(private readonly ignService:CompletionService){ 
     this.clientForm = new FormGroup({
       firstName:new FormControl(''),
@@ -78,5 +68,14 @@ export class ClientFormComponent  {
   newLocationSelected(event:MatSelectChange){
     let selectedAddressFulltext = event.value;    
     this.selectedAddress=this.matchingAdresses.find(ad=>ad.fulltext===selectedAddressFulltext);
+  }
+
+
+  //event child
+  newParcelInfo(parcelInfoReceived:Feature){
+    console.log("parent received by for from child :");
+    console.log(parcelInfoReceived);
+    this._parcelInfoReceivedProps=(parcelInfoReceived.properties as GeoJsonProperties.GeoJsonProperties);
+    this._parcelInfoReceived=parcelInfoReceived;
   }
 }
