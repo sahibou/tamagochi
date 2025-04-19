@@ -1,34 +1,26 @@
 <div class="flex-client-form">
     <div class="left">
-        <form [formGroup]="clientForm" (submit)="submitClientForm()"> 
-            <!--     firstName:string,
-        lastname:string,
-        mail:string,
-        
-        address:string,
-        postCode:string,
-        city:string,
+        <form [formGroup]="clientForm" (submit)="submitClientForm($event)"> 
 
-        parcelId:string,
-        pluLink:string,-->
             <mat-form-field class="input-client">
                 <mat-label>Votre prénom</mat-label>
-                <input matInput type="text" formGroupName="firstName"/>
+                <input matInput type="text" formControlName="firstName" placeholder="Exemple: Anakin"/>
             </mat-form-field>
             <mat-form-field class="input-client">
                 <mat-label>Votre nom</mat-label>
-                <input matInput type="text" formControlName="lastName"/>
+                <input  matInput type="text" formControlName="lastName" placeholder="Exemple: Skywalker"/>
             </mat-form-field>
             <mat-form-field class="input-client">
                 <mat-label>Votre adresse</mat-label>
-                <input matInput type="text" formControlName="address" (change)="updateAdresseSaisie()"/>
+                <input matInput type="text" formControlName="address" (change)="updateAdresseSaisie()" placeholder="Exemple: 3 Rue de l\'Abbé Rozier, 69001 Lyon"/>
             </mat-form-field>
 
             
-            @if(this.etat){
-                <label for="address2">{{this.etat}}</label> 
+            @if(this.chargementAdresses!==''){
+                <label for="address2">{{this.chargementAdresses}}</label> 
+                <mat-progress-bar class="progress-addr" mode="buffer"></mat-progress-bar>
             }
-            @if(!this.etat){
+            @if(!this.chargementAdresses){
                 <p>Adresses compatibles trouvés : {{this.matchingAdresses.length}}</p>  
             }
             <mat-form-field class="input-client">
@@ -47,9 +39,23 @@
             }
             <a mat-flat-button routerLink="">Retour</a>
             <button mat-flat-button type="submit" class="primary">Soumettre</button>
-
+            
         </form>
+
+    
+        @if(firstName?.invalid){
+            <div class="alert alert-danger">le prénom n'est pas saisi</div>
+        }
+        @if(lastName?.invalid){
+            <div class="alert alert-danger">le nom n'est pas saisi</div>
+        }
+        @if(address?.invalid){
+            <div class="alert alert-danger">l'adresse n'est pas saisie</div>
+        }
+    
     </div>
+
+
     <div class="right">
         @if(this._parcelInfoReceived){
             <p>{{this._parcelInfoReceived.id}}</p>
@@ -66,18 +72,6 @@
                 <p>nom_com : {{this._parcelInfoReceivedProps['nom_com']??''}}</p>
                 <p>numero : {{this._parcelInfoReceivedProps['numero']??''}}</p>
                 <p>section : {{this._parcelInfoReceivedProps['section']??''}}</p>
-                <!-- code_arr: "000"
-                            code_com: "373"
-                            code_dep: "77"
-                            code_insee: "77373"
-                            com_abs: "000"
-                            contenance: 4607
-                            feuille: 1
-                            gid: 43861302
-                            idu: "77373000AH0003"
-                            nom_com: "Pontault-Combault"
-                            numero: "0003"
-                            section:"AH" -->
             }
 
         }

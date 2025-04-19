@@ -38,7 +38,7 @@ export class LeafletMapComponent implements AfterViewInit {
   set selectedAddress(value:Address|undefined){
     this._selectedAddress=value;
     if(this._selectedAddress && !this.map){
-      this.initMap();    
+      this.initMap();       
     }
     if(this._selectedAddress){
       this.centerMap();    
@@ -60,7 +60,8 @@ export class LeafletMapComponent implements AfterViewInit {
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(this.map);
-
+ 
+      this.centerMap();
     }
   }
 

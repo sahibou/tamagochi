@@ -2,7 +2,10 @@
   display:block;
   width: 600px;
 }
-
+.progress-addr{
+  width: 600px;
+  margin: 10px;
+}
 
 .flex-client-form{
   display: flex;
@@ -25,4 +28,10 @@
   padding: 5px;
   line-height: 0.6em;
   background-color: var(--content-client-form-right);
+}
+
+
+.alert-danger{
+  color:purple;
+  font-size: 1em;
 }
