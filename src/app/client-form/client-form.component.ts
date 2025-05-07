@@ -37,7 +37,8 @@ export class ClientFormComponent  {
   protected clientForm!:FormGroup;
   protected matchingAdresses:Address[]=[];
   protected selectedAddress!:Address|undefined;
-  protected chargementAdresses:string='';
+  protected chargementAdressesTente:boolean=false;
+  protected chargementAdressesEnCours:boolean=false;
   _parcelInfoReceived!:Feature;
   _parcelInfoReceivedProps!:GeoJsonProperties.GeoJsonProperties;
 
@@ -78,13 +79,14 @@ export class ClientFormComponent  {
   }
 
   updateAdresseSaisie(){
-    this.chargementAdresses="Recherche de correspondances en cours...";
+    this.chargementAdressesEnCours=true;
+    this.chargementAdressesTente=true;
     this.ignService.completion(this.clientForm.value.address, 'METROPOLE', undefined, undefined, undefined, 6, undefined, undefined, false).subscribe({
       next: next=>{
         this.matchingAdresses=next.results;        
       },
       error:error=>console.log(error),
-      complete:()=>this.chargementAdresses='' 
+      complete:()=>this.chargementAdressesEnCours=false
     });
   }
 

@@ -1,5 +1,5 @@
 <div class="flex-client-form">
-    <div class="left">
+    <!-- <div class="left"> -->
         <form [formGroup]="clientForm" (submit)="submitClientForm($event)"> 
 
             <mat-form-field class="input-client">
@@ -16,11 +16,11 @@
             </mat-form-field>
 
             
-            @if(this.chargementAdresses!==''){
-                <label for="address2">{{this.chargementAdresses}}</label> 
+            @if(this.chargementAdressesEnCours){
+                <label for="address2">Recherche de correspondances en cours...</label> 
                 <mat-progress-bar class="progress-addr" mode="buffer"></mat-progress-bar>
             }
-            @if(!this.chargementAdresses){
+            @if(this.chargementAdressesTente){
                 <p>Adresses compatibles trouvés : {{this.matchingAdresses.length}}</p>  
             }
             <mat-form-field class="input-client">
@@ -38,9 +38,11 @@
                 <app-leaflet-map [selectedAddress]="selectedAddress" (parcelleEvent)="newParcelInfo($event)"></app-leaflet-map>
             }
             <a mat-flat-button routerLink="">Retour</a>
-            <button mat-flat-button type="submit" class="primary">Soumettre</button>
+            
+            <button mat-flat-button type="submit" class="submit_form">Soumettre</button>
             
         </form>
+<!--
     </div>
 
 
@@ -81,4 +83,5 @@
 
         }
     </div>
+-->
 </div>

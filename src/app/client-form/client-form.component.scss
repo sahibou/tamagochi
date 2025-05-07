@@ -1,14 +1,14 @@
 .input-client{
   display:block;
-  width: 600px;
+  width: 100%;
 }
 .progress-addr{
-  width: 600px;
+  width: 100%;
   margin: 10px;
 }
 
 .flex-client-form{
-  display: flex;
+  
 }
 
 /* Control the left side */
@@ -29,6 +29,7 @@
   line-height: 1em;
   background-color: var(--content-client-form-right);
 }
+
 
 
 .alert-danger{
