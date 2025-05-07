@@ -119,7 +119,7 @@ export class LeafletMapComponent implements AfterViewInit {
   }
 
   stylea:{}={color: "#0000ff"};
-  styleb:{}={color: "#ff0000"};
+  styleb:{}={color: "#555555"};
 
   async addFeatureToMap(f:Feature, selectedParcelId:string){
     const L = await import('leaflet');

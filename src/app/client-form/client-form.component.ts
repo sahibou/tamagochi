@@ -10,9 +10,10 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatSelectChange, MatSelectModule} from '@angular/material/select';
 import { LeafletMapComponent } from "../leaflet-map/leaflet-map.component";
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {Feature} from 'geojson';
 import type GeoJsonProperties from 'geojson';
+
 
 @Component({
   selector: 'app-client-form',
@@ -36,12 +37,12 @@ export class ClientFormComponent  {
   protected clientForm!:FormGroup;
   protected matchingAdresses:Address[]=[];
   protected selectedAddress!:Address|undefined;
-  protected chargementAdresses!:string;
+  protected chargementAdresses:string='';
   _parcelInfoReceived!:Feature;
   _parcelInfoReceivedProps!:GeoJsonProperties.GeoJsonProperties;
 
   private _snackBar = inject(MatSnackBar);
-  constructor(private readonly ignService:CompletionService){ 
+  constructor(private readonly ignService:CompletionService, private _router:Router){ 
     this.clientForm = new FormGroup({
       firstName:new FormControl('',[Validators.required, Validators.minLength(2)]),
       lastName:new FormControl('',[Validators.required, Validators.minLength(2)]),
@@ -65,12 +66,13 @@ export class ClientFormComponent  {
   public submitClientForm(e:Event){
     if(this.clientForm.invalid || this._parcelInfoReceived===undefined){
       this._snackBar.open('Le formulaire contient des erreurs, veuillez vérifier votre saisie et selectionner une parcelle', 'Undo', {
-        duration: 3000
+        duration: 5000
       });
     }else{
       this._snackBar.open('Informations sauvegardés', 'Undo', {
         duration: 3000
       });
+      this._router.navigate(['saisie-terminee']);
     }
     
   }

@@ -41,37 +41,42 @@
             <button mat-flat-button type="submit" class="primary">Soumettre</button>
             
         </form>
-
-    
-        @if(firstName?.invalid){
-            <div class="alert alert-danger">le prénom n'est pas saisi</div>
-        }
-        @if(lastName?.invalid){
-            <div class="alert alert-danger">le nom n'est pas saisi</div>
-        }
-        @if(address?.invalid){
-            <div class="alert alert-danger">l'adresse n'est pas saisie</div>
-        }
-    
     </div>
 
 
     <div class="right">
+        @if(this.clientForm.invalid){
+            <h3>Erreurs :</h3>
+        }
+        @if(this.clientForm.invalid && firstName?.invalid){
+            <div class="alert alert-danger">le prénom n'est pas saisi</div>
+        }
+        @if(this.clientForm.invalid && lastName?.invalid){
+            <div class="alert alert-danger">le nom n'est pas saisi</div>
+        }
+        @if(this.clientForm.invalid && address?.invalid){
+            <div class="alert alert-danger">l'adresse n'est pas saisie</div>
+        }
+        @if(!this.selectedAddress){
+            <div class="alert alert-danger">Aucune adresse trouvée choisi</div>
+        }
+
         @if(this._parcelInfoReceived){
-            <p>{{this._parcelInfoReceived.id}}</p>
+            <h3>Informations parcelle :</h3>
+            <div>{{this._parcelInfoReceived.id}}</div>
             @if(this._parcelInfoReceivedProps){
-                <p>code_arr : {{this._parcelInfoReceivedProps['code_arr']??''}}</p>
-                <p>code_com : {{this._parcelInfoReceivedProps['code_com']??''}}</p>
-                <p>code_dep : {{this._parcelInfoReceivedProps['code_dep']??''}}</p>
-                <p>code_insee : {{this._parcelInfoReceivedProps['code_insee']??''}}</p>
-                <p>com_abs : {{this._parcelInfoReceivedProps['com_abs']??''}}</p>
-                <p>contenance : {{this._parcelInfoReceivedProps['contenance']??''}}</p>
-                <p>feuille : {{this._parcelInfoReceivedProps['feuille']??''}}</p>
-                <p>gid : {{this._parcelInfoReceivedProps['gid']??''}}</p>
-                <p>idu : {{this._parcelInfoReceivedProps['idu']??''}}</p>
-                <p>nom_com : {{this._parcelInfoReceivedProps['nom_com']??''}}</p>
-                <p>numero : {{this._parcelInfoReceivedProps['numero']??''}}</p>
-                <p>section : {{this._parcelInfoReceivedProps['section']??''}}</p>
+                <div>code_arr : {{this._parcelInfoReceivedProps['code_arr']??''}}</div>
+                <div>code_com : {{this._parcelInfoReceivedProps['code_com']??''}}</div>
+                <div>code_dep : {{this._parcelInfoReceivedProps['code_dep']??''}}</div>
+                <div>code_insee : {{this._parcelInfoReceivedProps['code_insee']??''}}</div>
+                <div>com_abs : {{this._parcelInfoReceivedProps['com_abs']??''}}</div>
+                <div>contenance : {{this._parcelInfoReceivedProps['contenance']??''}}</div>
+                <div>feuille : {{this._parcelInfoReceivedProps['feuille']??''}}</div>
+                <div>gid : {{this._parcelInfoReceivedProps['gid']??''}}</div>
+                <div>idu : {{this._parcelInfoReceivedProps['idu']??''}}</div>
+                <div>nom_com : {{this._parcelInfoReceivedProps['nom_com']??''}}</div>
+                <div>numero : {{this._parcelInfoReceivedProps['numero']??''}}</div>
+                <div>section : {{this._parcelInfoReceivedProps['section']??''}}</div>
             }
 
         }
