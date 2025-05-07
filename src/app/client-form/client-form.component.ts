@@ -9,7 +9,6 @@ import { MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatSelectChange, MatSelectModule} from '@angular/material/select';
-import { LeafletMapComponent } from "../leaflet-map/leaflet-map.component";
 import { Router, RouterLink } from '@angular/router';
 import {Feature} from 'geojson';
 import type GeoJsonProperties from 'geojson';
@@ -27,7 +26,7 @@ import { LeafletMap19Component } from "../leaflet-map-19/leaflet-map-19.componen
     MatIconModule,
     MatProgressBar,
     MatSelectModule,
-    LeafletMapComponent, RouterLink,
+    RouterLink,
     LeafletMap19Component
 ],
   providers: [CompletionService,HttpClient],

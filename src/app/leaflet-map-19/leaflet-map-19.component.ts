@@ -27,14 +27,17 @@ export class LeafletMap19Component implements OnInit{
   // This is because these options are passed into the map constructor, so they can't be changed anyways. 
   // So, make sure the object exists before the map is created. You'll want to create the object in ngOnInit or hide the map DOM element with *ngIf until you can create the options object
   ngOnInit(){
-    this.options = {
-      layers: [tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })],
-      zoom: 5,
-      center: latLng(46.879966, -121.726909)
-    };  
     if (isPlatformBrowser(this.platformId)) {
-      this.showGeoJsonLayer=true;
+      this.options = {
+        layers: [tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })],
+        zoom: 5,
+        center: latLng(46.879966, -121.726909)
+      };  
+      if (isPlatformBrowser(this.platformId)) {
+        this.showGeoJsonLayer=true;
+      }
     }
+    
   }
   
   @Input()

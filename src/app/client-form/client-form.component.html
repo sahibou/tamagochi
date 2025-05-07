@@ -35,7 +35,7 @@
             
             
             @if(this.selectedAddress){
-                <app-leaflet-map [selectedAddress]="selectedAddress" (parcelleEvent)="newParcelInfo($event)"></app-leaflet-map>
+                <!--<app-leaflet-map [selectedAddress]="selectedAddress" (parcelleEvent)="newParcelInfo($event)"></app-leaflet-map>-->
                 <app-leaflet-map-19 [selectedAddress]="selectedAddress" (featureEmitter)="newParcelInfo($event)"></app-leaflet-map-19>
             }
             <a mat-flat-button routerLink="">Retour</a>
