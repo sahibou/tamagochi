@@ -36,6 +36,7 @@
             
             @if(this.selectedAddress){
                 <app-leaflet-map [selectedAddress]="selectedAddress" (parcelleEvent)="newParcelInfo($event)"></app-leaflet-map>
+                <app-leaflet-map-19 [selectedAddress]="selectedAddress" (featureEmitter)="newParcelInfo($event)"></app-leaflet-map-19>
             }
             <a mat-flat-button routerLink="">Retour</a>
             
@@ -63,25 +64,7 @@
             <div class="alert alert-danger">Aucune adresse trouvée choisi</div>
         }
 
-        @if(this._parcelInfoReceived){
-            <h3>Informations parcelle :</h3>
-            <div>{{this._parcelInfoReceived.id}}</div>
-            @if(this._parcelInfoReceivedProps){
-                <div>code_arr : {{this._parcelInfoReceivedProps['code_arr']??''}}</div>
-                <div>code_com : {{this._parcelInfoReceivedProps['code_com']??''}}</div>
-                <div>code_dep : {{this._parcelInfoReceivedProps['code_dep']??''}}</div>
-                <div>code_insee : {{this._parcelInfoReceivedProps['code_insee']??''}}</div>
-                <div>com_abs : {{this._parcelInfoReceivedProps['com_abs']??''}}</div>
-                <div>contenance : {{this._parcelInfoReceivedProps['contenance']??''}}</div>
-                <div>feuille : {{this._parcelInfoReceivedProps['feuille']??''}}</div>
-                <div>gid : {{this._parcelInfoReceivedProps['gid']??''}}</div>
-                <div>idu : {{this._parcelInfoReceivedProps['idu']??''}}</div>
-                <div>nom_com : {{this._parcelInfoReceivedProps['nom_com']??''}}</div>
-                <div>numero : {{this._parcelInfoReceivedProps['numero']??''}}</div>
-                <div>section : {{this._parcelInfoReceivedProps['section']??''}}</div>
-            }
-
-        }
+        
     </div>
 -->
 </div>

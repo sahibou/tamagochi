@@ -1,0 +1,7 @@
+<div style="height: 300px;"
+     leaflet 
+     [leafletOptions]="options">
+     @if(geoJsonLayer){
+        <div [leafletLayer]="geoJsonLayer"></div>
+     }
+</div>

@@ -1,3 +1,55 @@
+import { Component, Input, OnInit, Output, EventEmitter, Inject, PLATFORM_ID } from '@angular/core';
+import { LeafletModule } from '@bluehalo/ngx-leaflet';
+import { MapOptions, tileLayer, latLng, circle, polygon, marker } from 'leaflet';
+import { Address } from 'ign-geos-completion-swagger-client';
+import { Feature } from 'geojson';
+import { isPlatformBrowser } from '@angular/common';
+
+
+@Component({
+  selector: 'app-leaflet-map-19',
+  imports: [LeafletModule],
+  templateUrl: './leaflet-map-19.component.html',
+  styleUrl: './leaflet-map-19.component.scss'
+})
+
+export class LeafletMap19Component implements OnInit{
+  protected options:MapOptions={};
+  protected showGeoJsonLayer:boolean=false;
+  protected geoJsonLayer = circle([ 46.95, -122 ], { radius: 5000 });
+  @Output() featureEmitter:EventEmitter<Feature> = new EventEmitter<Feature>();
+
+
+  constructor(@Inject(PLATFORM_ID) private platformId: any){
+
+  }
+  // Changes to leafletOptions are ignored after they are initially set. 
+  // This is because these options are passed into the map constructor, so they can't be changed anyways. 
+  // So, make sure the object exists before the map is created. You'll want to create the object in ngOnInit or hide the map DOM element with *ngIf until you can create the options object
+  ngOnInit(){
+    this.options = {
+      layers: [tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })],
+      zoom: 5,
+      center: latLng(46.879966, -121.726909)
+    };  
+    if (isPlatformBrowser(this.platformId)) {
+      this.showGeoJsonLayer=true;
+    }
+  }
+  
+  @Input()
+  set selectedAddress(address:Address){
+   console.log("NEW"); 
+  }
+
+  newParcelInfo(parcelInfoReceived:Feature){
+  }
+
+}
+
+
+
+/*
 import { EventEmitter, Component, AfterViewInit, PLATFORM_ID ,Inject, Input, Output, ɵɵqueryRefresh } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { LeafletData } from '../leaflet-data';
@@ -154,3 +206,4 @@ export class LeafletMapComponent implements AfterViewInit {
 
 
 }
+*/

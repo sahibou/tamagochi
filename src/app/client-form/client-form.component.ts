@@ -13,6 +13,7 @@ import { LeafletMapComponent } from "../leaflet-map/leaflet-map.component";
 import { Router, RouterLink } from '@angular/router';
 import {Feature} from 'geojson';
 import type GeoJsonProperties from 'geojson';
+import { LeafletMap19Component } from "../leaflet-map-19/leaflet-map-19.component";
 
 
 @Component({
@@ -26,8 +27,9 @@ import type GeoJsonProperties from 'geojson';
     MatIconModule,
     MatProgressBar,
     MatSelectModule,
-    LeafletMapComponent,RouterLink
-  ],
+    LeafletMapComponent, RouterLink,
+    LeafletMap19Component
+],
   providers: [CompletionService,HttpClient],
   templateUrl: './client-form.component.html',
   styleUrl: './client-form.component.scss'
@@ -95,8 +97,6 @@ export class ClientFormComponent  {
     this.selectedAddress=this.matchingAdresses.find(ad=>ad.fulltext===selectedAddressFulltext);
   }
 
-
-  //event child
   newParcelInfo(parcelInfoReceived:Feature){
     console.log("parent received by for from child :");
     console.log(parcelInfoReceived);
